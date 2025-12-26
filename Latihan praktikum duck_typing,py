@@ -1,0 +1,26 @@
+class Laptop:
+    def __init__(self, merk):
+        self.merk = merk
+
+    def nyalakan(self):
+        return f"Laptop {self.merk} menyala"
+
+
+class Smartphone:
+    def __init__(self, merk):
+        self.merk = merk
+
+    def nyalakan(self):
+        return f"Smartphone {self.merk} menyala"
+
+
+def tes_nyala(obj):
+    print(obj.nyalakan())
+
+
+# Demonstrasi duck typing
+laptop = Laptop("ASUS")
+smartphone = Smartphone("Samsung")
+
+tes_nyala(laptop)
+tes_nyala(smartphone)
