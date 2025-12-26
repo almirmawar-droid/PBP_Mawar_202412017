@@ -1,4 +1,4 @@
-# relasi aggregation
+# Relasi Aggregation
 class Nilai:
     def __init__(self, kode_mk: str, skor: float):
         self.kode_mk = kode_mk
@@ -9,7 +9,7 @@ class Mahasiswa:
     def __init__(self, nim, nama):
         self.nim = nim
         self.nama = nama
-        self.daftar_nilai = []    # agregasi: objek Nilai dapat hidup sendiri
+        self.daftar_nilai = []  # agregasi: Nilai dapat berdiri sendiri
 
     def tambah_nilai(self, nilai: Nilai):
         self.daftar_nilai.append(nilai)
@@ -22,17 +22,17 @@ class MataKuliah:
 
 
 class ProgramStudi:
-    def __init__(self, nama: str):
+    def __init__(self, nama):
         self.nama = nama
-        self.daftar_matakuliah = []   # agregasi terhadap MataKuliah
+        self.daftar_matakuliah = []  # agregasi
 
     def tambah_matakuliah(self, mk: MataKuliah):
         self.daftar_matakuliah.append(mk)
 
 
-# relasi composition (Universitas menciptakan ProgramStudi)
+# Relasi Composition
 class Universitas:
-    def __init__(self, nama: str):
+    def __init__(self, nama):
         self.nama = nama
         self.programs = []
 
@@ -55,11 +55,10 @@ if __name__ == "__main__":
     m1 = Mahasiswa("23001", "Budi")
     m2 = Mahasiswa("23002", "Siti")
 
-    # relasi association
+    # Relasi Association
     m1.tambah_nilai(Nilai("TI101", 85))
     m1.tambah_nilai(Nilai("TI102", 78))
     m2.tambah_nilai(Nilai("TI101", 90))
-
 
     def report_program(prodi: ProgramStudi, semua_mahasiswa: list[Mahasiswa]):
         print(f"Program Studi: {prodi.nama}")
@@ -67,12 +66,15 @@ if __name__ == "__main__":
         print("Mahasiswa dan rata-rata nilai:")
 
         for m in semua_mahasiswa:
-            relevan = [n for n in m.daftar_nilai if any(n.kode_mk == mk.kode for mk in prodi.daftar_matakuliah)]
+            relevan = [
+                n for n in m.daftar_nilai
+                if any(n.kode_mk == mk.kode for mk in prodi.daftar_matakuliah)
+            ]
+
             if relevan:
                 avg = sum(n.skor for n in relevan) / len(relevan)
-                print(f"  {m.nim} - {m.nama}: {round(avg,2)}")
+                print(f" {m.nim} - {m.nama}: {round(avg, 2)}")
 
         print("-" * 40)
-
 
     report_program(prodi_ti, [m1, m2])
